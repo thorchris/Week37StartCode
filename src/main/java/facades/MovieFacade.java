@@ -40,17 +40,6 @@ public class MovieFacade {
         return emf.createEntityManager();
     }
     
-//    public Movie getMovieById(int id) {
-//        EntityManager em = emf.createEntityManager();
-//        try {
-//            Query query2 = em.createQuery("Select e FROM Movie e WHERE e.id = :id");
-//            query2.setParameter("id", id);
-//            Movie movie = (Movie) query2.getSingleResult();
-//            return movie;
-//        } finally {
-//            em.close();
-//        }
-//    }
     
         public MovieDTO getMovieById(int id) {
         EntityManager em = emf.createEntityManager();
@@ -65,13 +54,14 @@ public class MovieFacade {
         }
     }
     
-        public Movie getMovieByName(String title) {
+        public MovieDTO getMovieByName(String title) {
         EntityManager em = emf.createEntityManager();
         try {
             Query query2 = em.createQuery("Select e FROM Movie e WHERE e.title = :title");
             query2.setParameter("title", title);
-            Movie emp = (Movie) query2.getSingleResult();
-            return emp;
+            Movie movie = (Movie) query2.getSingleResult();
+            MovieDTO movDTO = new MovieDTO(movie);
+            return movDTO;
         } finally {
             em.close();
         }
