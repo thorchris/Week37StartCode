@@ -1,7 +1,7 @@
 package facades;
 
 import utils.EMF_Creator;
-import entities.RenameMe;
+import entities.Movie;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.AfterAll;
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 public class FacadeExampleTest {
 
     private static EntityManagerFactory emf;
-    private static FacadeExample facade;
+    private static MovieFacade facade;
 
     public FacadeExampleTest() {
     }
@@ -24,7 +24,7 @@ public class FacadeExampleTest {
     @BeforeAll
     public static void setUpClass() {
        emf = EMF_Creator.createEntityManagerFactoryForTest();
-       facade = FacadeExample.getFacadeExample(emf);
+       facade = MovieFacade.getFacadeExample(emf);
     }
 
     @AfterAll
@@ -39,10 +39,9 @@ public class FacadeExampleTest {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-            em.persist(new RenameMe("Some txt", "More text"));
-            em.persist(new RenameMe("aaa", "bbb"));
-
+            em.persist(new Movie(1995, "Fed Film 1", "Fed actor 1"));
+            em.persist(new Movie(2005, "Fed Film 2", "Fed actor 2"));
+            em.persist(new Movie(2015, "Fed Film 3", "Fed actor 3"));
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -55,9 +54,32 @@ public class FacadeExampleTest {
     }
 
     // TODO: Delete or change this method 
-    @Test
-    public void testAFacadeMethod() {
-        assertEquals(2, facade.getRenameMeCount(), "Expects two rows in the database");
+//    @Test
+//    public void testGetMovieByID() {
+//        MovieFacade mf = MovieFacade.getFacadeExample(emf);
+//        Long id = 1;
+//        Long expResult = 1;
+//        Long result = mf.getMovieById(id).getId();
+//        
+//        assertEquals(expResult, result);
+//    }
+    
+        @Test
+    public void testGetMovieByName() {
+        MovieFacade cf = MovieFacade.getFacadeExample(emf);
+        String name = "Fed Film 1";
+        String expResult = "Fed Film 1";
+        String result = cf.getMovieByName(name).getTitle();
+
+        assertEquals(expResult, result);
+    }
+    
+        @Test
+    public void testgetAllMovies() {
+        MovieFacade cf = MovieFacade.getFacadeExample(emf);
+        int expResult = 3;
+        int result = cf.getAllMovies().size();
+        assertEquals(expResult, result);
     }
 
 }
