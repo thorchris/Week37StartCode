@@ -12,34 +12,32 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
 @NamedQuery(name = "Movie.deleteAllRows", query = "DELETE from Movie"),
-@NamedQuery(name = "Movie.getAll", query = "SELECT m FROM Movie m"),
-@NamedQuery(name = "Movie.getByName", query = "SELECT m FROM Movie m WHERE m.name LIKE :name")
 })
 public class Movie implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private int year;
     private String title;
-    private String actors;
+    private String director;
 
     public Movie(int year, String title, String actors) {
         this.year = year;
         this.title = title;
-        this.actors = actors;
+        this.director = actors;
     }
 
     public Movie() {
     }
     
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -59,12 +57,12 @@ public class Movie implements Serializable {
         this.title = title;
     }
 
-    public String getActors() {
-        return actors;
+    public String getDirector() {
+        return director;
     }
 
-    public void setActors(String actors) {
-        this.actors = actors;
+    public void setDirector(String actors) {
+        this.director = actors;
     }
 
 

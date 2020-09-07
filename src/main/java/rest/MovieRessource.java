@@ -25,33 +25,31 @@ public class MovieRessource {
     private static final MovieFacade FACADE =  MovieFacade.getFacadeExample(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
             
- @Path("all")
+ 
     @GET
+    @Path("all")
     @Produces(MediaType.APPLICATION_JSON)
     public String getAllMovies() {
         EntityManager em = EMF.createEntityManager();
         try {
-            List<MovieDTO> dtoList = new ArrayList();
-            List<Movie> emp = FACADE.getAllMovies();
-            for (Movie movie : emp) {
-                MovieDTO empDTO = new MovieDTO(movie);
-                dtoList.add(empDTO);
-            }
-            return new Gson().toJson(dtoList);
+            MovieFacade mf = MovieFacade.getFacadeExample(EMF);
+            List<MovieDTO> movieList = mf.getAllMovies();
+            return new Gson().toJson(movieList);
         } finally {
             em.close();
         }
     }
     
-    @Path("id/{id}")
+    
     @GET
+    @Path("id/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getMovieById(@PathParam("id") Long id) {
+    public String getMovieById(@PathParam("id") int id) {
         EntityManager em = EMF.createEntityManager();
         try {
-            Movie emp = FACADE.getMovieById(id);
-            MovieDTO dtoEmp = new MovieDTO(emp);
-            return new Gson().toJson(dtoEmp);
+            Movie movie = FACADE.getMovieById(id);
+            MovieDTO dtoMov = new MovieDTO(movie);
+            return new Gson().toJson(dtoMov);
         } finally {
             em.close();
         }

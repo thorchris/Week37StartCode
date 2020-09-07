@@ -1,6 +1,8 @@
 package facades;
 
+import dto.MovieDTO;
 import entities.Movie;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -38,13 +40,13 @@ public class MovieFacade {
         return emf.createEntityManager();
     }
     
-    public Movie getMovieById(Long id) {
+    public Movie getMovieById(int id) {
         EntityManager em = emf.createEntityManager();
         try {
             Query query2 = em.createQuery("Select e FROM Movie e WHERE e.id = :id");
             query2.setParameter("id", id);
-            Movie emp = (Movie) query2.getSingleResult();
-            return emp;
+            Movie movie = (Movie) query2.getSingleResult();
+            return movie;
         } finally {
             em.close();
         }
@@ -61,28 +63,32 @@ public class MovieFacade {
             em.close();
         }
     }
-        
-        public List<Movie> getAllMovies(){
+
+//        public List<Movie> getAllMovies(){
+//        EntityManager em = emf.createEntityManager();
+//        try{
+//            TypedQuery<Movie> query = em.createQuery("Select e from Movie e", Movie.class);
+//            return query.getResultList();
+//        } finally{
+//            em.close();
+//        }
+//    }
+    public List<MovieDTO> getAllMovies() {
         EntityManager em = emf.createEntityManager();
-        try{
-            TypedQuery<Movie> query = em.createQuery("Select movie from Movie movie", Movie.class);
-            return query.getResultList();
-        } finally{
-            em.close();
-        }
-    }
-        
-        public Movie createMovie(int year, String title, String actors){
-        Movie employee = new Movie(year, title, actors);
-        EntityManager em = emf.createEntityManager();
-        try{
-            em.getTransaction().begin();
-            em.persist(employee);
-            em.getTransaction().commit();
-            return employee;
+        try {
+            Query query2 = em.createQuery("Select e from Movie e");
+            List<Movie> movieList = query2.getResultList();
+            List<MovieDTO> movieDTOList = new ArrayList();
+            for (Movie movie : movieList) {
+                MovieDTO movDTO = new MovieDTO(movie);
+                movieDTOList.add(movDTO);    
+            }
+            return movieDTOList;
+            
         } finally {
             em.close();
         }
     }
+        
 
 }
