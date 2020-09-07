@@ -38,7 +38,7 @@ public class MovieFacade {
         return emf.createEntityManager();
     }
     
-    public Movie getMovieById(int id) {
+    public Movie getMovieById(Long id) {
         EntityManager em = emf.createEntityManager();
         try {
             Query query2 = em.createQuery("Select e FROM Movie e WHERE e.id = :id");
@@ -50,11 +50,11 @@ public class MovieFacade {
         }
     }
     
-        public Movie getMovieByName(String name) {
+        public Movie getMovieByName(String title) {
         EntityManager em = emf.createEntityManager();
         try {
-            Query query2 = em.createQuery("Select e FROM Movie e WHERE e.name = :name");
-            query2.setParameter("name", name);
+            Query query2 = em.createQuery("Select e FROM Movie e WHERE e.title = :title");
+            query2.setParameter("title", title);
             Movie emp = (Movie) query2.getSingleResult();
             return emp;
         } finally {

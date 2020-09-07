@@ -46,10 +46,10 @@ public class MovieRessource {
     @Path("id/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getEmployeesById(@PathParam("id") long id) {
+    public String getMovieById(@PathParam("id") Long id) {
         EntityManager em = EMF.createEntityManager();
         try {
-            Movie emp = FACADE.getMovieById((int) id);
+            Movie emp = FACADE.getMovieById(id);
             MovieDTO dtoEmp = new MovieDTO(emp);
             return new Gson().toJson(dtoEmp);
         } finally {
@@ -57,13 +57,13 @@ public class MovieRessource {
         }
     }
     
-    @Path("name/{name}")
+    @Path("title/{title}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getEmployeesByName(@PathParam("name") String name) {
+    public String getMovieByName(@PathParam("title") String title) {
         EntityManager em = EMF.createEntityManager();
         try {
-            Movie emp = FACADE.getMovieByName(name);
+            Movie emp = FACADE.getMovieByName(title);
             MovieDTO dtoEmp = new MovieDTO(emp);
             return new Gson().toJson(dtoEmp);
         } finally {

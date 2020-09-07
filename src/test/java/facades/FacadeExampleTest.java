@@ -9,10 +9,11 @@ import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 //Uncomment the line below, to temporarily disable this test
-//@Disabled
+@Disabled
 public class FacadeExampleTest {
 
     private static EntityManagerFactory emf;
@@ -53,7 +54,7 @@ public class FacadeExampleTest {
 //        Remove any data after each test was run
     }
 
-    // TODO: Delete or change this method 
+     //TODO: Delete or change this method 
 //    @Test
 //    public void testGetMovieByID() {
 //        MovieFacade mf = MovieFacade.getFacadeExample(emf);
@@ -65,7 +66,7 @@ public class FacadeExampleTest {
 //    }
     
         @Test
-    public void testGetMovieByName() {
+        public void testGetMovieByName() {
         MovieFacade cf = MovieFacade.getFacadeExample(emf);
         String name = "Fed Film 1";
         String expResult = "Fed Film 1";
@@ -75,7 +76,7 @@ public class FacadeExampleTest {
     }
     
         @Test
-    public void testgetAllMovies() {
+        public void testgetAllMovies() {
         MovieFacade cf = MovieFacade.getFacadeExample(emf);
         int expResult = 3;
         int result = cf.getAllMovies().size();
