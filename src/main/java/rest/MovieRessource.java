@@ -47,7 +47,7 @@ public class MovieRessource {
         try {
             MovieFacade mf = MovieFacade.getFacadeExample(EMF);
             List<MovieDTO> movieList = mf.getAllMovies();
-            return new Gson().toJson(movieList);
+            return GSON.toJson(movieList);
         } finally {
             em.close();
         }
@@ -61,7 +61,7 @@ public class MovieRessource {
         try {
             MovieFacade mf = MovieFacade.getFacadeExample(EMF);
             MovieDTO dtoMov = mf.getMovieById(id);
-            return new Gson().toJson(dtoMov);
+            return GSON.toJson(dtoMov);
         } finally {
             em.close();
         }
@@ -75,7 +75,7 @@ public class MovieRessource {
         try {
             MovieFacade mf = MovieFacade.getFacadeExample(EMF);
             MovieDTO dtoMov = mf.getMovieByName(title);
-            return new Gson().toJson(dtoMov);
+            return GSON.toJson(dtoMov);
         } finally {
             em.close();
         }
