@@ -25,8 +25,23 @@ public class MovieRessource {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String demo(){
+        return "{\"msg\":\"Hello World\"}";
+    }
+    
+    @Path("count")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String count() {
+        long count = FACADE.getMovieCount();
+        return "{\"count\":"+count+"}";
+    }
+
+    
+    @GET
     @Path("all")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON})
     public String getAllMovies() {
         EntityManager em = EMF.createEntityManager();
         try {
@@ -40,7 +55,7 @@ public class MovieRessource {
 
     @GET
     @Path("id/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON})
     public String getMovieById(@PathParam("id") int id) {
         EntityManager em = EMF.createEntityManager();
         try {
@@ -54,7 +69,7 @@ public class MovieRessource {
 
     @Path("title/{title}")
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON})
     public String getMovieByName(@PathParam("title") String title) {
         EntityManager em = EMF.createEntityManager();
         try {
@@ -64,5 +79,13 @@ public class MovieRessource {
         } finally {
             em.close();
         }
+    }
+    
+    @GET
+    @Path("/populate")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String populate(){
+        FACADE.populateDB();
+        return "{\"msg\":\"3 rows added\"}";
     }
 }

@@ -11,7 +11,10 @@ import javax.persistence.NamedQuery;
 
 @Entity
 @NamedQueries({
-@NamedQuery(name = "Movie.deleteAllRows", query = "DELETE from Movie"),
+    @NamedQuery(name = "Movie.deleteAllRows", query = "DELETE from Movie"),
+    @NamedQuery(name = "Movie.getAll", query = "SELECT m FROM Movie m"),
+    @NamedQuery(name = "Movie.getByTitle", query = "SELECT m FROM Movie m WHERE m.title LIKE CONCAT('%',:title,'%')"),
+    @NamedQuery(name = "Movie.getById", query = "SELECT m FROM Movie m WHERE m.id = :id")
 })
 public class Movie implements Serializable {
 
@@ -23,10 +26,10 @@ public class Movie implements Serializable {
     private String title;
     private String director;
 
-    public Movie(int year, String title, String actors) {
+    public Movie(int year, String title, String director) {
         this.year = year;
         this.title = title;
-        this.director = actors;
+        this.director = director;
     }
 
     public Movie() {

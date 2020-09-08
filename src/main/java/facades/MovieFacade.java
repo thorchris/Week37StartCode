@@ -40,6 +40,15 @@ public class MovieFacade {
         return emf.createEntityManager();
     }
     
+        public long getMovieCount(){
+            EntityManager em = emf.createEntityManager();
+            try{
+                long movieCount = (long)em.createQuery("SELECT COUNT(m) FROM Movie m").getSingleResult();
+                return movieCount;
+            } finally {
+                em.clear();
+            }
+        }
     
         public MovieDTO getMovieById(int id) {
         EntityManager em = emf.createEntityManager();
@@ -81,6 +90,19 @@ public class MovieFacade {
             }
             return movieDTOList;
             
+        } finally {
+            em.close();
+        }
+    }
+    
+    public void populateDB(){
+        EntityManager em = emf.createEntityManager();
+        try{
+            em.getTransaction().begin();
+            em.persist(new Movie(2002, "Harry Potter", "J.K Rowling"));
+            em.persist(new Movie(2005, "Star Wars", "George Lucas"));
+            em.persist(new Movie(2015, "Once apon a time in Holly Wood", "Tarentino"));
+            em.getTransaction().commit();
         } finally {
             em.close();
         }
