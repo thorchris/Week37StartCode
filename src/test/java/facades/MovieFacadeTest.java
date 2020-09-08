@@ -14,12 +14,12 @@ import org.junit.jupiter.api.Test;
 
 //Uncomment the line below, to temporarily disable this test
 //@Disabled
-public class FacadeExampleTest {
+public class MovieFacadeTest {
 
     private static EntityManagerFactory emf;
     private static MovieFacade facade;
 
-    public FacadeExampleTest() {
+    public MovieFacadeTest() {
     }
 
     @BeforeAll
@@ -38,11 +38,15 @@ public class FacadeExampleTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
+        Movie m1 = new Movie(1995, "Harry Potter", "J.K Rowling");
+        Movie m2 = new Movie(2005, "Star Wars", "George Lucas");
+        Movie m3 = new Movie(2015, "Once apon a time in Holly Wood", "Tarentino");
         try {
             em.getTransaction().begin();
-            em.persist(new Movie(1995, "Fed Film 1", "Fed actor 1"));
-            em.persist(new Movie(2005, "Fed Film 2", "Fed actor 2"));
-            em.persist(new Movie(2015, "Fed Film 3", "Fed actor 3"));
+            em.createNamedQuery("Movie.deleteAllRows").executeUpdate();
+            em.persist(m1);
+            em.persist(m2);
+            em.persist(m3);
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -54,15 +58,16 @@ public class FacadeExampleTest {
 //        Remove any data after each test was run
     }
     
-//        @Test
-//        public void testGetMovieByName() {
-//        MovieFacade cf = MovieFacade.getFacadeExample(emf);
-//        String name = "Fed Film 1";
-//        String expResult = "Fed Film 1";
-//        String result = cf.getMovieByName(name).getTitle();
-//
-//        assertEquals(expResult, result);
-//    }
+        @Test
+        public void testGetMovieByName() {
+        MovieFacade cf = MovieFacade.getFacadeExample(emf);
+        String name = "Harry Potter";
+        String expResult = "Harry Potter";
+        String result = cf.getMovieByName(name).getTitle();
+
+        assertEquals(expResult, result);
+    }
+        
     
         @Test
         public void testgetAllMovies() {
@@ -71,5 +76,7 @@ public class FacadeExampleTest {
         int result = cf.getAllMovies().size();
         assertEquals(expResult, result);
     }
+        
+        
 
 }

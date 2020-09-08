@@ -20,12 +20,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 //Uncomment the line below, to temporarily disable this test
-@Disabled
-public class RenameMeResourceTest {
+//@Disabled
+public class MovieResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
-    private static Movie r1,r2;
+    private static Movie r1,r2, r3;
     
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
@@ -62,11 +62,11 @@ public class RenameMeResourceTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-//        r1 = new Movie("Some txt","More text");
-//        r2 = new Movie("aaa","bbb");
+        r1 = new Movie(1995, "Harry Potter", "J.K Rowling");
+        r2 = new Movie(2005, "Star Wars", "George Lucas");
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Movie.deleteAllRows").executeUpdate();
             em.persist(r1);
             em.persist(r2); 
             em.getTransaction().commit();
@@ -78,27 +78,17 @@ public class RenameMeResourceTest {
     @Test
     public void testServerIsUp() {
         System.out.println("Testing is server UP");
-        given().when().get("/xxx").then().statusCode(200);
+        given().when().get("/movie/all").then().statusCode(200);
     }
    
     //This test assumes the database contains two rows
     @Test
-    public void testDummyMsg() throws Exception {
+    public void testGetAllMovies() throws Exception {
         given()
         .contentType("application/json")
-        .get("/xxx/").then()
+        .get("/movie/all").then()
         .assertThat()
-        .statusCode(HttpStatus.OK_200.getStatusCode())
-        .body("msg", equalTo("Hello World"));   
+        .statusCode(HttpStatus.OK_200.getStatusCode());
     }
     
-    @Test
-    public void testCount() throws Exception {
-        given()
-        .contentType("application/json")
-        .get("/xxx/count").then()
-        .assertThat()
-        .statusCode(HttpStatus.OK_200.getStatusCode())
-        .body("count", equalTo(2));   
-    }
 }
