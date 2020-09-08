@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 //Uncomment the line below, to temporarily disable this test
-@Disabled
+//@Disabled
 public class FacadeExampleTest {
 
     private static EntityManagerFactory emf;
@@ -53,27 +53,16 @@ public class FacadeExampleTest {
     public void tearDown() {
 //        Remove any data after each test was run
     }
-
-     //TODO: Delete or change this method 
-//    @Test
-//    public void testGetMovieByID() {
-//        MovieFacade mf = MovieFacade.getFacadeExample(emf);
-//        Long id = 1;
-//        Long expResult = 1;
-//        Long result = mf.getMovieById(id).getId();
-//        
+    
+//        @Test
+//        public void testGetMovieByName() {
+//        MovieFacade cf = MovieFacade.getFacadeExample(emf);
+//        String name = "Fed Film 1";
+//        String expResult = "Fed Film 1";
+//        String result = cf.getMovieByName(name).getTitle();
+//
 //        assertEquals(expResult, result);
 //    }
-    
-        @Test
-        public void testGetMovieByName() {
-        MovieFacade cf = MovieFacade.getFacadeExample(emf);
-        String name = "Fed Film 1";
-        String expResult = "Fed Film 1";
-        String result = cf.getMovieByName(name).getTitle();
-
-        assertEquals(expResult, result);
-    }
     
         @Test
         public void testgetAllMovies() {

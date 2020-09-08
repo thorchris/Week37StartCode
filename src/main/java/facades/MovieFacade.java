@@ -66,6 +66,8 @@ public class MovieFacade {
             em.close();
         }
     }
+        
+
 
     public List<MovieDTO> getAllMovies() {
         EntityManager em = emf.createEntityManager();
