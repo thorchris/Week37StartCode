@@ -25,7 +25,7 @@ public class MovieResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
-    private static Movie r1,r2, r3;
+    private static Movie r1,r2;
     
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
@@ -89,6 +89,26 @@ public class MovieResourceTest {
         .get("/movie/all").then()
         .assertThat()
         .statusCode(HttpStatus.OK_200.getStatusCode());
+    }
+    
+    @Test
+    public void testSpecificTitle() throws Exception {
+        given()
+        .contentType("application/json")
+        .get("/movie/title/Harry Potter").then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("title", equalTo(r1.getTitle())); 
+    }
+    
+    @Test
+    public void testCount() throws Exception {
+        given()
+        .contentType("application/json")
+        .get("/movie/count").then()
+        .assertThat()
+        .statusCode(HttpStatus.OK_200.getStatusCode())
+        .body("count", equalTo(2));
     }
     
 }
