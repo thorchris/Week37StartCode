@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .myDiv {
+                width: 25px;
+                height: 25px;
+                background-color: yellow;
+                margin: 1px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="outer">
+        <div class="myDiv" id="1">Ja</div>
+        <div class="myDiv" id="2">Nej</div>
+        <div class="myDiv" id="3">Ja</div>
+        <div class="myDiv" id="4">Ja</div>
+        <div class="myDiv" id="5">Nej</div>
+        <div class="myDiv" id="6">Ja</div>
+        <div class="myDiv" id="7">Ja</div>
+        <div class="myDiv" id="8">Nej</div>
+        <div class="myDiv" id="9">Ja</div>
+        <div class="myDiv" id="10">Ja</div>
+        </div>
+        
+        <p id="p"></p>
+        
+        <script>
+            const list = document.getElementById("outer");
+            var p = document.getElementById("p");
+            list.addEventListener('click', function(e){
+                if(e.target)
+                    p.innerHTML = "Hi from div: " + e.target.id;
+                }
+            );
+        </script>
+        
+    </body>
+</html>
